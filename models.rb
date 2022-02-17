@@ -1,8 +1,10 @@
 ActiveRecord::Base.establish_connection
 
-class BBSdata < ActiveRecord::Base
+class BBSData < ActiveRecord::Base
+    belongs_to :users
 end
 
-class USer < ActiveRecord::Base
+class User < ActiveRecord::Base
     has_secure_password
+    has_many :bbsdatas
 end

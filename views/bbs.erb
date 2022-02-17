@@ -1,0 +1,11 @@
+<form action="/post" method="post">
+    <input type="text" name="article" placeholder="投稿内容を記入してください">
+    <input type="submit" value="投稿する">
+</form>
+
+<% @articles.each do |article| %>
+    <div class="border rounded">
+        <p><%= article.article %></p>
+        <p><%= User.find_by(id: article.users_id) %></p>
+    </div>
+<% end %>
