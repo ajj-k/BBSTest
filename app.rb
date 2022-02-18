@@ -31,12 +31,9 @@ end
 
 get '/bbs' do
    if current_user.nil?
-      @articles = BBSData.none
-   elsif BBSData.all.nil?
-      @articles = BBSData.none
-      #@articles = BBSData.where(users_id: session[:user])
+      @articles = Article.none
    else
-      @articles = BBSData.all
+      @articles = Article.all
    end
    erb :bbs
 end

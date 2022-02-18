@@ -5,9 +5,9 @@ ActiveRecord::Base.establish_connection
 
 class User < ActiveRecord::Base
     has_secure_password
-    has_many :bbsdatas
+    has_many :articles
 end
 
-class BBSData < ActiveRecord::Base
-    belongs_to :users
+class Article < ActiveRecord::Base
+    belongs_to :user
 end
