@@ -33,7 +33,7 @@ get '/bbs' do
    if current_user.nil?
       @articles = Article.none
    else
-      @articles = Article.all
+      @articles = Article.all.order("created_at desc")
    end
    erb :bbs
 end
@@ -56,10 +56,11 @@ post '/signup' do
 end
 
 post '/post' do
-   current_user.bbsdatas.create(
+   current_user.articles.create(
       article: params[:article],
       reply_check: false,
-      reply_id: -1
+      reply_id: -1,
+      user_id: session[:user]
       )
    redirect "/bbs"
 end

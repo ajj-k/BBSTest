@@ -6,6 +6,6 @@
 <% @articles.each do |article| %>
     <div class="border rounded">
         <p><%= article.article %></p>
-        <p><%= User.find_by(id: article.users_id) %></p>
+        <p><%= User.find_by(id: article.user_id).name %></p>
     </div>
 <% end %>
