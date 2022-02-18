@@ -32,8 +32,11 @@ end
 get '/bbs' do
    if current_user.nil?
       @articles = BBSData.none
+   elsif BBSData.all.nil?
+      @articles = BBSData.none
+      #@articles = BBSData.where(users_id: session[:user])
    else
-      @articles = BBSData.where(users_id: session[:user])
+      @articles = BBSData.all
    end
    erb :bbs
 end
@@ -61,4 +64,5 @@ post '/post' do
       reply_check: false,
       reply_id: -1
       )
+   redirect "/bbs"
 end
