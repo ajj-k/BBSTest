@@ -5,7 +5,14 @@
 
 <% @articles.each do |article| %>
     <div class="border rounded">
-        <p><%= article.article %></p>
-        <p><%= User.find_by(id: article.user_id).name %></p>
+        <!--<form action="/reply_check" method="post"> -->
+            <p><%= CGI.escapeHTML(article.article) %></p>
+            <%= User.find_by(id: article.user_id).name %>, <%= article.created_at %>
+          <!--  <input type="submit" value="返信する">
+        </form> -->
+        <a href="/reply/<%= article.id %>">返信する</a>
+        <% if article.reply_check %>
+        <a href="/reply_view/<%= article.id %>">返信があります</a>
+        <% end %>
     </div>
 <% end %>

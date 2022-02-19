@@ -64,3 +64,27 @@ post '/post' do
       )
    redirect "/bbs"
 end
+
+post '/reply' do
+   current_user.articles.create(
+      article: params[:reply_article],
+      reply_check: false,
+      reply_id: session[:reply],
+      user_id: session[:user]
+      )
+   article = Article.find_by(id: session[:reply])
+   article.reply_check = true
+   article.save
+   redirect "/bbs"
+end
+
+get '/reply/:id' do
+   @article = Article.find_by(id: params[:id])
+   session[:reply] = params[:id]
+   erb :bbs_reply
+end
+
+get '/reply_view/:id' do
+   @articles = Article.all.order("created_at desc").where(reply_id: params[:id])
+   erb :reply_view
+end

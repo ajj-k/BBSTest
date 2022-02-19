@@ -1,0 +1,4 @@
+<% @articles.each do |article| %>
+    <p><%= CGI.escapeHTML(article.article) %></p>
+    <%= User.find_by(id: article.user_id).name %>, <%= article.created_at %>
+<% end %>
