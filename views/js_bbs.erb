@@ -1,0 +1,43 @@
+<script>
+    $(function() {
+        
+        $("#btnAdd").val("追加").on('click', function() {
+        //要素数
+        var n = $(".hoge").length + 1;
+        //追加する要素文字列
+        var dom = "<div class='hoge' id='hoge-" + n + "'>" + n + ".";
+            dom += "<input type='text' id='hoge-in-" + n +"' onchenge='changeInput(this)'/>";
+            dom += "</div>";
+        //養素を追加
+        $("#dvContentArea").append(dom);
+        });
+        
+        $("#btnDel").val("削除").on('click', function() {
+            
+        //要素数
+        var n = $(".hoge").length;
+        //要素数が0の場合の処理
+        if (n <= 0) return ;
+        //養素の削除
+        $(`#hoge-${n}`).remove();
+        });
+    });
+    
+    function changeInput(d){
+        alert("id:" + d.id + "の値が" + $(d).val() + "に変更されました。");
+    }
+    
+</script>
+<input type="button" id="btnAdd">
+<input type="button" id="btnDel">
+<div id="dvContentArea"></div>
+
+<input type="text" id="input_message" value="" onchenge="func1()">
+<div id="output_message"></div>
+
+<script language="javascript" type="text/javascript">
+    function func1() {
+        var input_message = document.getElementById("input_message").value;
+        document.getElementById("output_message").innerHTML = input_message.toUpperCase();
+    }
+</script>

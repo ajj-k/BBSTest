@@ -3,8 +3,10 @@ Bundler.require
 require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
 require './models'
+require 'sinatra-websocket'
 
 enable :sessions
+set :sockets, []
 
 helpers do
     def current_user
@@ -87,4 +89,32 @@ end
 get '/reply_view/:id' do
    @articles = Article.all.order("created_at desc").where(reply_id: params[:id])
    erb :reply_view
+end
+
+get '/bbs-js' do
+   erb :js_bbs
+end
+
+get '/websocket' do
+   if !require.websocket?
+      erb :index
+   else
+      request.websocket do |ws|
+         ws.onopen do
+            ws.send("Hello World!")
+            settings.sockets << ws
+         end
+         ws.onmessage do |msg|
+            WM.next_tick do
+               settings.sockets.each do |s|
+                  s.send("Echo message: " + msg)
+               end
+            end
+         end
+         ws.onclose do
+            warn("websocket closed")
+            settings.sockets.delete(ws)
+         end
+      end
+   end
 end
